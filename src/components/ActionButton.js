@@ -2,6 +2,8 @@ import React from 'react';
 import Icon from '@material-ui/core/Icon';
 import { Card, Button } from '@material-ui/core';
 import TextArea from 'react-textarea-autosize';
+import {connect} from "react-redux";
+import {addList, addCard} from "../actions";
 
 class ActionButton extends React.Component{
 
@@ -27,6 +29,28 @@ class ActionButton extends React.Component{
             text: e.target.value
         });
     };
+
+    handleAddList = () => {
+        const {dispatch} = this.props;
+        const {text} = this.state;
+
+        if (text){
+            dispatch(addList(text))
+        }
+
+        return;
+    }
+
+    handleAddCard = () => {
+        const {dispatch, listID} = this.props;
+        const {text} = this.state;
+
+        if (text){
+            dispatch(addCard(listID, text))
+        }
+
+        return;
+    }
 
     renderActionButton = () => {
         const {list} = this.props;
@@ -80,8 +104,13 @@ class ActionButton extends React.Component{
                 />
             </Card>
             <div style = {styles.formButtonGroup}>
-                <Button variant = "contained" style = {{color: "white", backgroundColor: "#5aac44"}}>
-                    {buttonTitle}
+                <Button
+                    //use onMouseDown as it fires before onBlur. Using onClick would make this unsuable
+                    onMouseDown = {list ? this.handleAddList : this.handleAddCard} 
+                    variant = "contained" 
+                    style = {{color: "white", backgroundColor: "#5aac44"}}
+                >
+                    {buttonTitle}{" "}
                 </Button>
                 <Icon style = {{ marginLeft: 8, cursor: "pointer"}}>close</Icon>
             </div>
@@ -111,4 +140,4 @@ const styles = {
     }
 };
 
-export default ActionButton;
+export default connect() (ActionButton);

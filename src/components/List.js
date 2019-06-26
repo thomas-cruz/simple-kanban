@@ -3,14 +3,14 @@ import Card from './Card';
 import ActionButton from './ActionButton';
 
 
-const List = ({title, cards}) => {
+const List = ({title, cards, listID}) => {
     return(
         <div style={styles.container}>
             <h4>{title}</h4>
             {cards.map(card => 
                 (<Card key = {card.id} text = {card.text}/>
             ))}
-            <ActionButton/>
+            <ActionButton listID = {listID}/>
         </div>
     )
 }

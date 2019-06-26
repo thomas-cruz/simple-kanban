@@ -11,12 +11,16 @@ class App extends Component {
                 <h2>Hello World!</h2>
                 <div style = {styles.listContainer}>
                     {lists.map(list => (
-                        <List key = {list.id} title = {list.title} cards = {list.cards}/>
+                        <List 
+                            listID = {list.id} 
+                            key = {list.id} 
+                            title = {list.title} 
+                            cards = {list.cards}/>
                     ))}
                     <ActionButton list/>
                 </div>
             </div>
-            );
+        );
     }
 }
 
