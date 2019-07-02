@@ -3,17 +3,30 @@ import List from './List';
 import { connect } from 'react-redux';
 import ActionButton from './ActionButton';
 import { DragDropContext } from 'react-beautiful-dnd';
+import { sort } from '../actions';
 
 class App extends Component {
 
-    onDragEnd = () =>{
-//add logic
+    onDragEnd = (result) => {
+        const {destination, source, draggableId} = result;
+        if(!destination){ //if drop object doesnt land in a list
+            return;
+        }
+
+        this.props.dispatch(
+            sort(
+                source.droppableId,
+                destination.droppableId,
+                source.index,
+                destination.index,
+                draggableId
+            ));
     }
 
     render(){
         const { lists } = this.props;
         return(
-            <DragDropContext onDrageEd={this.onDragEnd}>
+            <DragDropContext onDragEnd={this.onDragEnd}>
             <div className = "App">
                 <h2>Hello World!</h2>
                 <div style = {styles.listContainer}>
